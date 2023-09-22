@@ -3,21 +3,18 @@ import { recoverTypedDataAddress } from 'viem'
 import { type Address, useSignTypedData } from 'wagmi'
 
 const domain = {
-  name: 'Ether Mail',
-  version: '1',
-  chainId: 1,
-  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  name: "AurumOracle",
+  version: "1",
+  chainId: 11155111,
+  verifyingContract: "oracle.address",
 } as const
 
 const types = {
-  Person: [
-    { name: 'name', type: 'string' },
-    { name: 'wallet', type: 'address' },
-  ],
-  Mail: [
-    { name: 'from', type: 'Person' },
-    { name: 'to', type: 'Person' },
-    { name: 'contents', type: 'string' },
+  VerifyPacket: [
+    { name: "request", type: "bytes32" },
+    { name: "deadline", type: "uint256" },
+    { name: "payload", type: "bytes" },
+    { name: "tokenContract", type: "address" },
   ],
 } as const
 

@@ -1,33 +1,39 @@
 import { useContractReads } from 'wagmi'
-
-import { wagmiContractConfig } from './contracts'
-import { stringify } from '../utils/stringify'
+import { aurumV2ContractConfig } from './AurumV2core'
 
 export function ReadContracts() {
   const { data, isSuccess, isLoading } = useContractReads({
     contracts: [
       {
-        ...wagmiContractConfig,
-        functionName: 'balanceOf',
-        args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
-      },
-      {
-        ...wagmiContractConfig,
-        functionName: 'name',
-      },
-      {
-        ...wagmiContractConfig,
+        ...aurumV2ContractConfig,
         functionName: 'totalSupply',
+      },
+      {
+        ...aurumV2ContractConfig,
+        functionName: 'borrowInterestRate',
+      },
+      {
+        ...aurumV2ContractConfig,
+        functionName: 'maxLoanToValue',
+      },
+      {
+        ...aurumV2ContractConfig,
+        functionName: 'lendingInterestRate',
+      },
+      {
+        ...aurumV2ContractConfig,
+        functionName: 'totalBorrowed',
+      },
+      {
+        ...aurumV2ContractConfig,
+        functionName: 'getUtilization',
+      },
+      {
+        ...aurumV2ContractConfig,
+        functionName: 'getEthToUsdPrice',
       },
     ],
   })
 
-  return (
-    <div>
-      <div>Data:</div>
-      {isLoading && <div>loading...</div>}
-      {isSuccess &&
-        data?.map((data) => <pre key={stringify(data)}>{stringify(data)}</pre>)}
-    </div>
-  )
+  return ({ data, isSuccess, isLoading })
 }

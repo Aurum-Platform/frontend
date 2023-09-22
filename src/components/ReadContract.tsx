@@ -1,67 +1,74 @@
-import { useState } from 'react'
-import { BaseError } from 'viem'
-import { type Address, useContractRead } from 'wagmi'
+import { useContractRead } from 'wagmi'
+import { aurumV2ContractConfig } from './AurumV2core'
 
-import { wagmiContractConfig } from './contracts'
-
-export function ReadContract() {
-  return (
-    <div>
-      <div>
-        <BalanceOf />
-        <br />
-        <TotalSupply />
-      </div>
-    </div>
-  )
-}
-
-function TotalSupply() {
+export function TotalSupply() {
   const { data, isRefetching, refetch } = useContractRead({
-    ...wagmiContractConfig,
+    ...aurumV2ContractConfig,
     functionName: 'totalSupply',
   })
 
-  return (
-    <div>
-      Total Supply: {data?.toString()}
-      <button
-        disabled={isRefetching}
-        onClick={() => refetch()}
-        style={{ marginLeft: 4 }}
-      >
-        {isRefetching ? 'loading...' : 'refetch'}
-      </button>
-    </div>
-  )
+  return ({ data, isRefetching, refetch})
 }
 
-function BalanceOf() {
-  const [address, setAddress] = useState<Address>(
-    '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-  )
-  const { data, error, isLoading, isSuccess } = useContractRead({
-    ...wagmiContractConfig,
-    functionName: 'balanceOf',
-    args: [address],
-    enabled: Boolean(address),
+export function BorrowInterestRate() {
+  const { data, isRefetching, refetch } = useContractRead({
+    ...aurumV2ContractConfig,
+    functionName: 'borrowInterestRate',
   })
 
-  const [value, setValue] = useState<string>(address)
+  return ({ data, isRefetching, refetch})
+}
 
-  return (
-    <div>
-      Token balance: {isSuccess && data?.toString()}
-      <input
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="wallet address"
-        style={{ marginLeft: 4 }}
-        value={value}
-      />
-      <button onClick={() => setAddress(value as Address)}>
-        {isLoading ? 'fetching...' : 'fetch'}
-      </button>
-      {error && <div>{(error as BaseError).shortMessage}</div>}
-    </div>
-  )
+export function MaxLoanToValue() {
+  const { data, isRefetching, refetch } = useContractRead({
+    ...aurumV2ContractConfig,
+    functionName: 'maxLoanToValue',
+  })
+
+  return ({ data, isRefetching, refetch})
+}
+
+export function LendingInterestRate() {
+  const { data, isRefetching, refetch } = useContractRead({
+    ...aurumV2ContractConfig,
+    functionName: 'lendingInterestRate',
+  })
+
+  return ({ data, isRefetching, refetch})
+}
+
+export function TotalBorrow() {
+  const { data, isRefetching, refetch } = useContractRead({
+    ...aurumV2ContractConfig,
+    functionName: 'totalBorrowed',
+  })
+
+  return ({ data, isRefetching, refetch})
+}
+
+export function TotalDepositedNFTs() {
+  const { data, isRefetching, refetch } = useContractRead({
+    ...aurumV2ContractConfig,
+    functionName: 'totalDepositedNFTs',
+  })
+
+  return ({ data, isRefetching, refetch})
+}
+
+export function Utilization() {
+  const { data, isRefetching, refetch } = useContractRead({
+    ...aurumV2ContractConfig,
+    functionName: 'getUtilization',
+  })
+
+  return ({ data, isRefetching, refetch})
+}
+
+export function EthToUsdPrice() {
+  const { data, isRefetching, refetch } = useContractRead({
+    ...aurumV2ContractConfig,
+    functionName: 'getEthToUsdPrice',
+  })
+
+  return ({ data, isRefetching, refetch})
 }
