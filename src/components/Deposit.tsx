@@ -6,16 +6,15 @@ import { aurumV2ContractConfig } from './AurumV2core'
 import { stringify } from '../utils/stringify'
 
 export function DepositToPool() {
-//     const { write, data, error, isLoading, isError } = useContractWrite({
-//         ...aurumV2ContractConfig,
-//         functionName: 'depositToPool',
-//       })
-//     const {
-//         data: receipt,
-//         isLoading: isPending,
-//         isSuccess,
-//       } = useWaitForTransaction({ hash: data?.hash })
-// }
+    const { write, data, error, isLoading, isError } = useContractWrite({
+        ...aurumV2ContractConfig,
+        functionName: 'depositToPool',
+      })
+    const {
+        data: receipt,
+        isLoading: isPending,
+        isSuccess,
+      } = useWaitForTransaction({ hash: data?.hash })
 }
 
 export function WithdrawFromPool() {

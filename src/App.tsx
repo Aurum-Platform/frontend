@@ -3,6 +3,7 @@ import './App.css';
 import './static/css/navbar.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './component/Navbar';
+import {content } from './component/'
 import { Lend } from './pages';
 import { Borrow } from './pages';
 import { Portfolio } from './pages';

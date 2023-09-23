@@ -162,6 +162,5 @@ export function Content() {
                 <Popup protocolContract={Contract} Provider={Provider} totalSupply={data.totalSupply} totalBorrow={data.totalBorrow} LIR={data.LIR} ETHtoUSD={data.ethTousd} />
             </div>
         </div>
-      );
-      
+      ); 
 }

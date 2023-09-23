@@ -55,23 +55,24 @@ export function Portfolio() {
     console.log(Number(length));
     
     for (let i = 0; i < Number(length); i++) {
-      const { data: userDeposits } = Deposits(userAddress, BigInt(i)) ?? [null, 0n, 0n];
-      if (userDeposits) {
-        const date = getTimeFromSeconds(userDeposits[1].toLocaleString() ?? '0');
-        const ethToUsd = ethTousd ?? 1n;
-        const ethToUsdNumber = Number(ethToUsd) / 1e8;
-        newDeposits.push({
-          Id: i,
-          lender: userDeposits[0],
-          Amount: userDeposits[1], // Assuming deposit.Amount is userDeposits[0]
-          Interest: userDeposits[2], // Assuming deposit.Interest is userDeposits[2]
-          Date: date,
-          EthToUsd: ethToUsdNumber,
-        });
-      }
-    }
-    setDeposits(newDeposits); // Update the state after the loop
+    //   const { data: userDeposits } = Deposits(userAddress, BigInt(i)) ?? [null, 0n, 0n];
+    //   if (userDeposits) {
+    //     const date = getTimeFromSeconds(userDeposits[1].toLocaleString() ?? '0');
+    //     const ethToUsd = ethTousd ?? 1n;
+    //     const ethToUsdNumber = Number(ethToUsd) / 1e8;
+    //     newDeposits.push({
+    //       Id: i,
+    //       lender: userDeposits[0],
+    //       Amount: userDeposits[1], // Assuming deposit.Amount is userDeposits[0]
+    //       Interest: userDeposits[2], // Assuming deposit.Interest is userDeposits[2]
+    //       Date: date,
+    //       EthToUsd: ethToUsdNumber,
+    //     });
+    //   }
+    // }
+    // setDeposits(newDeposits); // Update the state after the loop
   }
+}
 
   
 
@@ -126,7 +127,7 @@ export function Portfolio() {
           </div>
         </div>
       </div>
-
+      
       <br /> <br />
 
       <div className='lend_history'>
