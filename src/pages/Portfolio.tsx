@@ -7,12 +7,12 @@ import no_history from '../static/img/blank_history.jpg';
 import '../App.css';
 import '../static/css/portfolio.css';
 
-import { PortfolioBorrow } from '../component/Portfolio-Borrow';
-import { PortfolioLend } from '../component/Portfolio-Lend';
-import { Balance } from '../components/Balance';
-import { LoanId } from '../components/Loan';
-import { EthToUsdPrice } from '../components/ReadContract';
-import { DepositId, Deposits } from '../components/Deposit';
+import { PortfolioBorrow } from '../components/Portfolio-Borrow';
+import { PortfolioLend } from '../components/Portfolio-Lend';
+import { Balance } from '../backend/Balance';
+import { LoanId } from '../backend/Loan';
+import { EthToUsdPrice } from '../backend/ReadContract';
+import { DepositId, Deposits } from '../backend/Deposit';
 import { getTimeFromSeconds } from '../utils/getTimeFromSeconds';
 
 export function Portfolio() {
@@ -53,49 +53,49 @@ export function Portfolio() {
     const newDeposits = []; // Use a different variable name to avoid conflicts
     const { data: ethTousd } = EthToUsdPrice();
     console.log(Number(length));
-    
+
     for (let i = 0; i < Number(length); i++) {
-    //   const { data: userDeposits } = Deposits(userAddress, BigInt(i)) ?? [null, 0n, 0n];
-    //   if (userDeposits) {
-    //     const date = getTimeFromSeconds(userDeposits[1].toLocaleString() ?? '0');
-    //     const ethToUsd = ethTousd ?? 1n;
-    //     const ethToUsdNumber = Number(ethToUsd) / 1e8;
-    //     newDeposits.push({
-    //       Id: i,
-    //       lender: userDeposits[0],
-    //       Amount: userDeposits[1], // Assuming deposit.Amount is userDeposits[0]
-    //       Interest: userDeposits[2], // Assuming deposit.Interest is userDeposits[2]
-    //       Date: date,
-    //       EthToUsd: ethToUsdNumber,
-    //     });
-    //   }
-    // }
-    // setDeposits(newDeposits); // Update the state after the loop
+      //   const { data: userDeposits } = Deposits(userAddress, BigInt(i)) ?? [null, 0n, 0n];
+      //   if (userDeposits) {
+      //     const date = getTimeFromSeconds(userDeposits[1].toLocaleString() ?? '0');
+      //     const ethToUsd = ethTousd ?? 1n;
+      //     const ethToUsdNumber = Number(ethToUsd) / 1e8;
+      //     newDeposits.push({
+      //       Id: i,
+      //       lender: userDeposits[0],
+      //       Amount: userDeposits[1], // Assuming deposit.Amount is userDeposits[0]
+      //       Interest: userDeposits[2], // Assuming deposit.Interest is userDeposits[2]
+      //       Date: date,
+      //       EthToUsd: ethToUsdNumber,
+      //     });
+      //   }
+      // }
+      // setDeposits(newDeposits); // Update the state after the loop
+    }
   }
-}
 
-  
 
-//   useEffect(() => {
-//     if(userAddress) {
-//     const {data: depositId} = DepositId(userAddress);
-//     console.log(depositId);
-    
-//     const deposits = [];
-    // const { data: ethTousd} = EthToUsdPrice();
-    // for (let i = 0; i < depositId?.valueOf(); i++) {
-    //   const deposit = await getDeposits(Contract, account, i);
-    //   const date = getTimeFromSeconds(deposit.Date);
-    //   deposits.push({
-    //     Id: i,
-    //     Amount: deposit.Amount,
-    //     Interest: deposit.Interest,
-    //     Date: date,
-    //     EthToUsd: ethTousd / 1e8
-    //   });
-    // }
-//     // setDeposits(deposits);
-// }}, [data]);
+
+  //   useEffect(() => {
+  //     if(userAddress) {
+  //     const {data: depositId} = DepositId(userAddress);
+  //     console.log(depositId);
+
+  //     const deposits = [];
+  // const { data: ethTousd} = EthToUsdPrice();
+  // for (let i = 0; i < depositId?.valueOf(); i++) {
+  //   const deposit = await getDeposits(Contract, account, i);
+  //   const date = getTimeFromSeconds(deposit.Date);
+  //   deposits.push({
+  //     Id: i,
+  //     Amount: deposit.Amount,
+  //     Interest: deposit.Interest,
+  //     Date: date,
+  //     EthToUsd: ethTousd / 1e8
+  //   });
+  // }
+  //     // setDeposits(deposits);
+  // }}, [data]);
 
   return (
     <div className='portfolio_main'>
@@ -127,7 +127,7 @@ export function Portfolio() {
           </div>
         </div>
       </div>
-      
+
       <br /> <br />
 
       <div className='lend_history'>

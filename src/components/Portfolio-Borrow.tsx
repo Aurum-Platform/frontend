@@ -1,15 +1,15 @@
 import '../static/css/portfolio.css';
-import { Repay } from '../components/Loan';
+import { Repay } from '../backend/Loan';
 import { ethers } from 'ethers';
 
 export function PortfolioBorrow(loan: any) {
-  const { write, data: receipt, error, isLoading, isError, isSuccess} = Repay();
+  const { write, data: receipt, error, isLoading, isError, isSuccess } = Repay();
 
   function userRepay() {
     const amount = loan.Amount.add(loan.Interest); // Use the add() method to perform BigNumber addition
     const amountInWei = amount.mul(ethers.utils.parseEther('1')); // Convert to Wei
     const amountBigInt = amountInWei.toBigInt(); // Convert to JavaScript bigint
-  
+
     write({
       args: [loan.id],
       value: amountBigInt,
