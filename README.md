@@ -8,6 +8,7 @@ using [Bun](https://bun.sh/) package manager instead of npm for speed and Elegan
  * Install dependencies by running `bun i`.
  * Run locally using `bun run dev`.
  * Default running port [`http://localhost:5174/`](http://localhost:5174/).
+ * Checkout deployed app [here](https://nft-lending-borrowing-protocol.vercel.app/)
 
 ## Lending and Borrowing demo
 https://github.com/Aurum-Platform/frontend/assets/106421807/99bc75a4-3727-4c8b-b5ed-0dd84fba8371
