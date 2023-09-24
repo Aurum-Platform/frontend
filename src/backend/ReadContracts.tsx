@@ -1,5 +1,5 @@
-import { useContractReads } from 'wagmi'
-import { aurumV2ContractConfig } from './AurumV2core'
+import { useContractReads } from 'wagmi';
+import { aurumV2ContractConfig } from './AurumV2core';
 
 export function ReadContracts() {
   const { data, isSuccess, isLoading } = useContractReads({
@@ -33,7 +33,7 @@ export function ReadContracts() {
         functionName: 'getEthToUsdPrice',
       },
     ],
-  })
+  });
 
-  return ({ data, isSuccess, isLoading })
+  return { data, isSuccess, isLoading };
 }

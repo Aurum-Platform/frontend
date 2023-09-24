@@ -1,16 +1,14 @@
-import { configureChains, createConfig } from 'wagmi'
-import { sepolia } from 'wagmi/chains'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { publicProvider } from 'wagmi/providers/public'
+import { configureChains, createConfig } from 'wagmi';
+import { sepolia } from 'wagmi/chains';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [sepolia],
-  [
-    publicProvider(),
-  ],
-)
+  [publicProvider()]
+);
 
 export const config = createConfig({
   autoConnect: true,
@@ -32,4 +30,4 @@ export const config = createConfig({
   ],
   publicClient,
   webSocketPublicClient,
-})
+});

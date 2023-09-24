@@ -7,8 +7,8 @@ import no_history from '../static/img/blank_history.jpg';
 import '../App.css';
 import '../static/css/portfolio.css';
 
-import { PortfolioBorrow } from '../components/Portfolio-Borrow';
-import { PortfolioLend } from '../components/Portfolio-Lend';
+import { PortfolioBorrow } from '../components';
+import { PortfolioLend } from '../components';
 import { Balance } from '../backend/Balance';
 import { LoanId } from '../backend/Loan';
 import { EthToUsdPrice } from '../backend/ReadContract';
@@ -47,66 +47,92 @@ export function Portfolio() {
       EthToUsd: 0,
     },
   ]);
-  if (userAddress) {
-    const { data: depositId } = DepositId(userAddress);
-    const length = parseInt(depositId?.toLocaleString() ?? '0');
-    const newDeposits = []; // Use a different variable name to avoid conflicts
-    const { data: ethTousd } = EthToUsdPrice();
-    console.log(Number(length));
 
-    for (let i = 0; i < Number(length); i++) {
-      //   const { data: userDeposits } = Deposits(userAddress, BigInt(i)) ?? [null, 0n, 0n];
-      //   if (userDeposits) {
-      //     const date = getTimeFromSeconds(userDeposits[1].toLocaleString() ?? '0');
-      //     const ethToUsd = ethTousd ?? 1n;
-      //     const ethToUsdNumber = Number(ethToUsd) / 1e8;
-      //     newDeposits.push({
-      //       Id: i,
-      //       lender: userDeposits[0],
-      //       Amount: userDeposits[1], // Assuming deposit.Amount is userDeposits[0]
-      //       Interest: userDeposits[2], // Assuming deposit.Interest is userDeposits[2]
-      //       Date: date,
-      //       EthToUsd: ethToUsdNumber,
-      //     });
-      //   }
-      // }
-      // setDeposits(newDeposits); // Update the state after the loop
+  useEffect(() => {
+    async function fetchData() {
+      if (userAddress) {
+        const { data: depositId } = DepositId(userAddress);
+        const length = parseInt(depositId?.toLocaleString() ?? '0');
+        const newDeposits = [];
+        const { data: ethTousd } = EthToUsdPrice();
+
+        for (let i = 0; i < Number(length); i++) {
+          const { data: userDeposits } = (await Deposits(
+            userAddress,
+            BigInt(i)
+          )) ?? [null, 0n, 0n];
+          if (userDeposits) {
+            const date = getTimeFromSeconds(
+              userDeposits[1].toLocaleString() ?? '0'
+            );
+            const ethToUsd = ethTousd ?? 1n;
+            const ethToUsdNumber = Number(ethToUsd) / 1e8;
+            newDeposits.push({
+              Id: i,
+              lender: userDeposits[0],
+              Amount: userDeposits[1], // Assuming deposit.Amount is userDeposits[0]
+              Interest: userDeposits[2], // Assuming deposit.Interest is userDeposits[2]
+              Date: date,
+              EthToUsd: ethToUsdNumber,
+            });
+          }
+        }
+        setDeposits(newDeposits); // Update the state after the loop
+      }
     }
-  }
+    fetchData();
+  }, [userAddress]);
 
+  useEffect(() => {
+    async function fetchData() {
+      if (userAddress) {
+        const { data: loanId } = LoanId(userAddress);
+        const length = parseInt(loanId?.toLocaleString() ?? '0');
+        const newLoans = [];
+        const { data: ethTousd } = EthToUsdPrice();
 
-
-  //   useEffect(() => {
-  //     if(userAddress) {
-  //     const {data: depositId} = DepositId(userAddress);
-  //     console.log(depositId);
-
-  //     const deposits = [];
-  // const { data: ethTousd} = EthToUsdPrice();
-  // for (let i = 0; i < depositId?.valueOf(); i++) {
-  //   const deposit = await getDeposits(Contract, account, i);
-  //   const date = getTimeFromSeconds(deposit.Date);
-  //   deposits.push({
-  //     Id: i,
-  //     Amount: deposit.Amount,
-  //     Interest: deposit.Interest,
-  //     Date: date,
-  //     EthToUsd: ethTousd / 1e8
-  //   });
-  // }
-  //     // setDeposits(deposits);
-  // }}, [data]);
+        for (let i = 0; i < Number(length); i++) {
+          const { data: loan } = (await Loans(userAddress, BigInt(i))) ?? [
+            null,
+            0n,
+            0n,
+          ];
+          if (loan) {
+            const date = getTimeFromSeconds(loan[5].toLocaleString() ?? '0');
+            const ethToUsd = ethTousd ?? 1n;
+            const ethToUsdNumber = Number(ethToUsd) / 1e8;
+            newLoans.push({
+              Id: i,
+              Borrower: loan[0],
+              TokenContract: loan[1],
+              TokenId: loan[2],
+              CollateralValue: loan[3],
+              Interest: loan[4],
+              Time: date,
+              Active: loan[6],
+              ImageURL: demo_img,
+              NFTName: 'NFT Name',
+              NFTDescription: '-',
+              EthToUsd: ethToUsdNumber,
+            });
+          }
+        }
+        setLoans(newLoans); // Update the state after the loop
+      }
+    }
+    fetchData();
+  }, [userAddress]);
 
   return (
-    <div className='portfolio_main'>
-      <div className='user_portfolio_section'>
-        <div className='user_section_head'>User Portfolio</div>
-        <div className='user_content'>
-          <div className='left_content'>
-            <img src={user_img} alt='' />
+    <div className="portfolio_main">
+      <div className="user_portfolio_section">
+        <div className="user_section_head">User Portfolio</div>
+        <div className="user_content">
+          <div className="left_content">
+            <img src={user_img} alt="" />
           </div>
-          <div className='right_content'>
-            <div className='right_content1'>
+          <div className="right_content">
+            <div className="right_content1">
               <div>
                 ChainID <br />
                 <span>
@@ -120,23 +146,21 @@ export function Portfolio() {
                 </span>
               </div>
             </div>
-            <div className='right_content2'>
+            <div className="right_content2">
               Address <br />
               <span>{userAddress?.toUpperCase()}</span>
             </div>
           </div>
         </div>
       </div>
-
       <br /> <br />
-
-      <div className='lend_history'>
-        <div className='lend_history_head'>Lend Transactions History</div>
-        <div className='lend_history_card_holder'>
+      <div className="lend_history">
+        <div className="lend_history_head">Lend Transactions History</div>
+        <div className="lend_history_card_holder">
           {deposits?.map((deposit, key) =>
             deposit.Amount === 0n ? (
-              <div className='no_history_div'>
-                <img src={no_history} alt='' />
+              <div className="no_history_div">
+                <img src={no_history} alt="" />
                 <div>No Lend Transactions to show</div>
               </div>
             ) : (
@@ -145,20 +169,18 @@ export function Portfolio() {
           )}
         </div>
       </div>
-
       <br /> <br /> <br />
-
-      <div className='borrow_history'>
-        <div className='borrow_history_head'>Borrow Transactions History</div>
-        <div className='borrow_history_card_holder'>
+      <div className="borrow_history">
+        <div className="borrow_history_head">Borrow Transactions History</div>
+        <div className="borrow_history_card_holder">
           {loans?.map((loan, key) =>
             loan.Active !== true && loan.CollateralValue !== 0 ? (
               <div style={{ color: 'white', fontSize: '35px' }}></div>
             ) : loan.CollateralValue === 0 ? (
               <>
                 <br />
-                <div className='no_history_div'>
-                  <img src={no_history} alt='' />
+                <div className="no_history_div">
+                  <img src={no_history} alt="" />
                   <div>No Borrow Transactions to show</div>
                 </div>
               </>
